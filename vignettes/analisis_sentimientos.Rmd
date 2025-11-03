@@ -1,0 +1,15 @@
+---
+title: "Análisis de sentimientos con DiccionariosEmocion"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Análisis de sentimientos con DiccionariosEmocion}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(DiccionariosEmocion)

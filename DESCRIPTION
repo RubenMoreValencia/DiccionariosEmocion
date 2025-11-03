@@ -1,0 +1,71 @@
+Package: DiccionariosEmocion
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Authors@R: c(
+    person(
+      "Ruben", "More",
+      email = "rmorev@unp.edu.pe",
+      role = c("aut", "cre")
+    )
+  )
+Description: More about what it does (maybe more than one line).
+    Continuation lines should be indented.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Imports:
+    MLmetrics,
+    Metrics,
+    NLP,
+    PRROC,
+    ROCR,
+    RWeka,
+    caret,
+    cld2,
+    data.table,
+    datasets,
+    dplyr,
+    e1071,
+    FactoMineR,
+    factoextra,
+    gbm,
+    ggplot2,
+    ggrepel,
+    glmnet,
+    googleLanguageR,
+    grid,
+    gridExtra,
+    keras,
+    lubridate,
+    magrittr,
+    neuralnet,
+    nnet,
+    openai (>= 0.4.1),
+    pROC,
+    PRROC,
+    partykit,
+    purrr,
+    randomForest,
+    readxl,
+    reshape2,
+    rpart,
+    rpart.plot,
+    scales,
+    syuzhet,
+    tensorflow,
+    tidyverse,
+    tm,
+    torch,
+    zoo,
+    usethis,
+    openai,
+    tidyr (>= 1.3.0),
+    ggraph (>= 2.1.0),
+    viridisLite (>= 0.4.0)
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

@@ -1,0 +1,156 @@
+---
+title: "DiccionariosEmocion — README"
+author: "Rubén Alexander More Valencia"
+date: "`r format(Sys.Date())`"
+output:
+  github_document:
+    html_preview: false
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+    df_print: paged
+params:
+  artefacto: "outputs/analisis_emociones.rds"
+  datos_csv: "Data/textos.csv"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE, message = FALSE, warning = FALSE, fig.retina = 2,
+  comment = "#>"
+)
+```
+
+# Propósito del proyecto
+
+**DiccionariosEmocion** es un marco analítico para **minería de texto y modelado de emociones en R**. Permite construir matrices valoradas con diccionarios (NRC, Bing, Afinn, Syuzhet), integrar modelos supervisados/no supervisados, analizar componentes (p. ej., PCA), y **generar reportes** reproducibles.
+
+# Justificación científica
+
+El análisis computacional de emociones relaciona **contenidos textuales** con **constructos afectivos** (ira, alegría, miedo, etc.). El paquete integra enfoques **léxicos**, **estadísticos**, **temáticos** y **distribucionales** (e.g., LDA, BERT), con **visualización** y **reportes**.
+
+# Arquitectura (extracto)
+
+> Inserte aquí (opcional) un árbol de carpetas del proyecto si desea mantenerlo en el README.
+Puede generarlo con utilidades como `fs::dir_tree()` o mantener un bloque manual.
+
+# Instalación y entorno
+
+```{r}
+# Instalar herramientas de desarrollo (solo si no las tiene)
+# install.packages(c("devtools", "roxygen2", "renv", "rmarkdown"))
+
+# (Opcional) Reproducibilidad de entorno
+# renv::init()      # una sola vez
+# renv::restore()   # cuando quiera recrear el entorno
+
+# Cargar el paquete en desarrollo (desde la raíz del proyecto)
+# devtools::load_all()
+
+# Generar documentación roxygen
+# devtools::document()
+```
+
+# Flujo analítico base
+
+Ajuste rutas y nombres según su proyecto. Las funciones mencionadas pertenecen al propio paquete/proyecto.
+
+```{r}
+# 1) Carga de datos (ejemplo reproducible si existe params$datos_csv)
+if (file.exists(params$datos_csv)) {
+  df <- readr::read_csv(params$datos_csv, show_col_types = FALSE)
+} else {
+  # Datos de ejemplo mínimos
+  df <- tibble::tibble(
+    id = 1:5,
+    texto = c(
+      "texto positivo y alegre",
+      "mensaje con miedo y preocupación",
+      "disgusto y enojo por problemas",
+      "confianza y sorpresa en el avance",
+      "tristeza y dudas"
+    )
+  )
+}
+print(utils::head(df))
+```
+
+```{r}
+# 2) Construcción de matrices valoradas por método (NRC, Bing, Afinn, Syuzhet)
+# Nota: Estas funciones deben existir en su proyecto/paquete.
+# mat_nrc     <- MatrizValoradaXMetodo(df, metodo = "NRC")
+# mat_bing    <- MatrizValoradaXMetodo(df, metodo = "Bing")
+# mat_afinn   <- MatrizValoradaXMetodo(df, metodo = "Afinn")
+# mat_syuzhet <- MatrizValoradaXMetodo(df, metodo = "Syuzhet")
+
+# Para fines demostrativos (si no existen aún), creamos placeholders:
+mat_nrc     <- NULL
+mat_bing    <- NULL
+mat_afinn   <- NULL
+mat_syuzhet <- NULL
+```
+
+```{r}
+# 3) Resumen/Agregación y exploración
+# resumen_pal <- generar_resumen_palabras(list(NRC=mat_nrc, Bing=mat_bing, Afinn=mat_afinn, Syuzhet=mat_syuzhet))
+# freq_pal    <- analizar_frecuencia_palabras(df, top_n = 30)
+
+# Ejemplo básico de conteo de palabras si aún no dispone de funciones:
+freq_pal <- df |>
+  dplyr::mutate(tokens = stringr::str_split(texto, "\\s+")) |>
+  tidyr::unnest(tokens) |>
+  dplyr::count(tokens, sort = TRUE)
+utils::head(freq_pal, 10)
+```
+
+```{r}
+# 4) Análisis de componentes (ejemplo con placeholder)
+# comp <- analisis_componentes_general(
+#   entradas = list(NRC=mat_nrc, Bing=mat_bing, Afinn=mat_afinn, Syuzhet=mat_syuzhet),
+#   config   = list(escalar = TRUE, metodo_reduccion = "PCA")
+# )
+
+# Placeholder si no existe la función en el namespace de su sesión:
+comp <- list(info = "Resultado de PCA/UMAP/etc. (ejemplo)")
+str(comp)
+```
+
+```{r}
+# 5) Exportación de artefactos (RDS)
+dir.create("outputs", showWarnings = FALSE, recursive = TRUE)
+artefacto <- list(
+  comp = comp,
+  # resumen = resumen_pal,
+  freq = freq_pal
+)
+saveRDS(artefacto, file = params$artefacto)
+params$artefacto
+```
+
+# Reportes
+
+Genere reportes específicos de análisis a partir del artefacto RDS:
+
+```{r eval=FALSE}
+# rmarkdown::render("reportes/Informe_Emociones.Rmd",
+#   params = list(artefacto = "outputs/analisis_emociones.rds")
+# )
+```
+
+# Buenas prácticas
+
+- Documentación con **roxygen2** y ejemplos.
+- Nombres de variables **sin tildes**.
+- Lógica en `R/`, datos en `data/`/`inst/extdata/`, reportes en `inst/reportes/` o `reportes/`.
+- Versionar funciones; incorporar pruebas cuando aplique.
+
+# Cita
+
+> More Valencia, R. A. (Año). *DiccionariosEmocion: Marco analítico para minería de texto y modelado de emociones en R*. Proyecto Doctorado Diccionarios Emoción.
+
+# Sesión
+
+```{r}
+sessionInfo()
+```
